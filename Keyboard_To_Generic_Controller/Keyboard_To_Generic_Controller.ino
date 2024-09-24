@@ -4,11 +4,9 @@
 USBHost myusb;
 KeyboardController keyboard1(myusb);
 USBHIDParser hid1(myusb);
-
-const int JOYSTICK_MIN = 0;
-const int JOYSTICK_MID = 512;  // Center position
-const int JOYSTICK_MAX = 1023;  // Full forward/right
-
+const uint8_t escape_key = 27;
+const uint8_t enter_key = 10;
+ 
 /*
 BUTTON_LOGO = 0,
 	BUTTON_A = 1,
@@ -33,7 +31,6 @@ BUTTON_LOGO = 0,
 
 
 void OnPress(int key){
-  digitalWrite(LED_BUILTIN, HIGH);
   switch (key){
     case 'w': XInput.press(DPAD_UP); break;
     case 'a': XInput.press(DPAD_LEFT); break;
@@ -46,8 +43,8 @@ void OnPress(int key){
     case ';': XInput.press(BUTTON_Y); break;
     case 'u': XInput.press(TRIGGER_LEFT); break;
     case 'i': XInput.press(TRIGGER_RIGHT); break;
-    case KEY_ESC: XInput.press(BUTTON_START); break;
-    case KEY_RETURN: XInput.press(BUTTON_BACK); break;
+    case escape_key: XInput.press(BUTTON_START); break;
+    case enter_key: XInput.press(BUTTON_BACK); break;
     case 'o': XInput.press(TRIGGER_RIGHT); break;
     case 'n': XInput.press(BUTTON_LB); break;
     case 'm': XInput.press(BUTTON_RB); break;
@@ -56,7 +53,6 @@ void OnPress(int key){
 }
 
 void OnRelease(int key){
-  digitalWrite(LED_BUILTIN, LOW);
   switch (key){
     case 'w': XInput.release(DPAD_UP); break;
     case 'a': XInput.release(DPAD_LEFT); break;
@@ -69,8 +65,8 @@ void OnRelease(int key){
     case ';': XInput.release(BUTTON_Y); break;
     case 'u': XInput.release(TRIGGER_LEFT); break;
     case 'i': XInput.release(TRIGGER_RIGHT); break;
-    case KEY_ESC: XInput.release(BUTTON_START); break;
-    case KEY_RETURN: XInput.release(BUTTON_BACK); break;
+    case escape_key: XInput.release(BUTTON_START); break;
+    case enter_key: XInput.release(BUTTON_BACK); break;
     case 'o': XInput.release(TRIGGER_RIGHT); break;
     case 'n': XInput.release(BUTTON_LB); break;
     case 'm': XInput.release(BUTTON_RB); break;
@@ -82,7 +78,6 @@ void setup() {
   myusb.begin();
   keyboard1.attachPress(OnPress);
   keyboard1.attachRelease(OnRelease);
-  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
